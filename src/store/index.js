@@ -49,7 +49,6 @@ export default new Vuex.Store({
       today.setDate(today.getDate() - 14);
       // const date = today.toISOString();
       axios.get(`https://api.github.com/repos/${state.gitHub.user}/${state.gitHub.repo}/issues?state=all&`).then(({ data }) => {
-        console.log(data);
         const maintenance = [];
         const issues = [];
         data.forEach((issue) => {
@@ -100,7 +99,6 @@ export default new Vuex.Store({
     },
     uptimeResponseStatistics: (state) => {
       const res = [];
-      console.log(Object.keys(state.uptimeRobot.response));
       Object.keys(state.uptimeRobot.response).forEach((id) => {
         const u = state.uptimeRobot.response[id];
         const forever = u.all_time_uptime_ratio;
