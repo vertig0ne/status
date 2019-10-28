@@ -1,32 +1,44 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="app" v-if="loading">
+
+  </div>
+  <div id="app" v-else>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">Status</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item to="/">Home</b-nav-item>
+        </b-navbar-nav>
+
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+    <b-container>
+      <router-view/>
+    </b-container>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { mapGetters, mapActions } from 'vuex';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default {
+  computed: {
+    ...mapGetters(['loading', 'uptimeResponseStatistics']),
+  },
+  methods: {
+    ...mapActions(['getMonitors', 'getIssues']),
+  },
+  created() {
+    this.getMonitors();
+    this.getIssues();
+  },
+};
+</script>
