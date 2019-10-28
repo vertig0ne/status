@@ -1,6 +1,6 @@
 <template>
   <div id="app" v-if="loading">
-
+    <b-spinner label="Loading..."></b-spinner>
   </div>
   <div id="app" v-else>
     <b-navbar toggleable="lg" type="dark" variant="info">
@@ -35,10 +35,17 @@ export default {
   },
   methods: {
     ...mapActions(['getMonitors', 'getIssues']),
+    getData() {
+      this.getMonitors(false);
+      this.getIssues(false);
+      setTimeout(this.getData, 300000);
+    },
   },
   created() {
     this.getMonitors();
     this.getIssues();
+
+    setTimeout(this.getData, 300000);
   },
 };
 </script>

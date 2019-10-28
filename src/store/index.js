@@ -43,8 +43,8 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getIssues: ({ commit, state }) => {
-      commit('SET_GH_LOADING', true);
+    getIssues: ({ commit, state }, setLoading = true) => {
+      if (setLoading) commit('SET_GH_LOADING', true);
       const today = new Date();
       today.setDate(today.getDate() - 14);
       // const date = today.toISOString();
@@ -57,11 +57,11 @@ export default new Vuex.Store({
         });
         commit('SET_MAINTENANCE', maintenance);
         commit('SET_ISSUES', issues);
-        commit('SET_GH_LOADING', false);
+        if (setLoading) commit('SET_GH_LOADING', false);
       });
     },
-    getMonitors: ({ commit, state }) => {
-      commit('SET_UR_LOADING', true);
+    getMonitors: ({ commit, state }, setLoading = true) => {
+      if (setLoading) commit('SET_UR_LOADING', true);
       const promises = [];
       state.uptimeRobot.monitors.forEach((key) => {
         const opt = {
@@ -79,7 +79,7 @@ export default new Vuex.Store({
           });
         promises.push(a);
       });
-      Promise.all(promises).then(() => { commit('SET_UR_LOADING', false); });
+      Promise.all(promises).then(() => { if (setLoading) commit('SET_UR_LOADING', false); });
     },
   },
   getters: {

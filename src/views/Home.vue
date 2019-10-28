@@ -18,7 +18,6 @@
       v-bind:options="{ filterable: false }"
     >
     </v-client-table>
-
   </div>
 </template>
 
